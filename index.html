@@ -3,17 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>パスワード生成</title>
+    <title>パスワード強度チェッカー</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>パスワード強度向上のための生成ツール</h1>
-        <p>普段使っているパスワードを入力してください（テスト用）。</p>
-        <input type="password" id="passwordInput" placeholder="パスワードを入力">
-        <button onclick="generatePassword()">パスワード生成</button>
-        <p id="generatedPassword"></p>
+    <form>
+        <h1>パスワード強度チェッカー</h1>
+        <label for="password">パスワード：</label>
+        <input type="text" id="password">
+        <button type="button" onclick="checkPasswordStrength()">チェック</button>
+        <div id="strength-indicator">パスワード強度: <span id="strength-text"></span></div>
+        <div id="reason"></div>
+    </form>
+    <div id="chartContainer">
+        <canvas id="myChart"></canvas>
     </div>
+
+    <!-- Firebase SDKの読み込み -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Firebaseの設定スクリプト -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+
+        // Firebase初期化
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore(); // Firestoreのインスタンス作成
+    </script>
+
+    <!-- カスタムスクリプトの読み込み -->
     <script src="script.js"></script>
 </body>
 </html>
