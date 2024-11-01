@@ -1,5 +1,4 @@
-// FirestoreのインスタンスはHTML内で初期化済み
-// キャラクタ頻度を記憶するオブジェクト
+// FirebaseとFirestoreの初期化はHTML内で済んでいる
 let characterFrequency = {};
 
 // パスワード強度チェック関数
@@ -53,7 +52,7 @@ function calculatePasswordStrength(password) {
     return { strength, reason };
 }
 
-// パスワードを解析し、各文字の頻度をカウントする関数
+// パスワードの文字を解析し、各文字の頻度をカウント
 function analyzePassword(password) {
     characterFrequency = {}; // リセット
 
@@ -66,12 +65,10 @@ function analyzePassword(password) {
     }
 }
 
-// Firestoreに頻度データを保存・更新する関数
+// Firestoreに頻度データを保存・更新
 async function updateDatabase() {
     try {
         const charFreqRef = db.collection("passwordStats").doc("characterFrequency");
-
-        // データを保存、または既存データがあれば更新
         await charFreqRef.set(characterFrequency, { merge: true });
         console.log("データベースに保存しました");
     } catch (error) {
@@ -95,7 +92,7 @@ async function loadCharacterFrequency() {
 // ページ読み込み時にデータを取得
 window.onload = loadCharacterFrequency;
 
-// 統計表示
+// グラフにデータを表示する関数
 function displayStatistics() {
     const ctx = document.getElementById('myChart').getContext('2d');
     const labels = Object.keys(characterFrequency);
